@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DugOut Live Radio - Cricket AI Commentary</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-radio logo-icon"></i>
+                <h1>DugOut <span>Live Radio</span></h1>
+            </div>
+            <div class="live-badge-container">
+                <span class="live-dot"></span>
+                <span class="live-text">LIVE STREAM</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <div class="dashboard-grid">
+            
+            <!-- Left Panel: Scoreboard & Visualizer -->
+            <div class="panel-left">
+                <!-- Scoreboard Card -->
+                <div class="card scoreboard-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-circle-nodes"></i> Match Center</h3>
+                        <span class="match-format">T20 WORLD CUP</span>
+                    </div>
+                    <div class="scoreboard-display">
+                        <div class="team-score">
+                            <span id="team-name-val" class="team-name">--</span>
+                            <span id="score-val" class="score-value">--/--</span>
+                        </div>
+                        <div class="match-overs">
+                            <span class="overs-label">OVERS</span>
+                            <span id="overs-val" class="overs-value">--</span>
+                        </div>
+                    </div>
+                    
+                    <div class="batsmen-bowler-section">
+                        <div class="player-info">
+                            <span class="role"><i class="fa-solid fa-batting-cleats"></i> Batsman</span>
+                            <span id="batsman-val" class="player-name">Waiting... *</span>
+                            <span id="non-striker-val" class="player-subname">Waiting...</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="player-info">
+                            <span class="role"><i class="fa-solid fa-baseball-ball"></i> Bowler</span>
+                            <span id="bowler-val" class="player-name">Waiting...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Radio Stream / Audio Visualizer Card -->
+                <div class="card visualizer-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-volume-high"></i> AI Commentary Stream</h3>
+                        <span id="stream-status" class="status-offline">OFFLINE</span>
+                    </div>
+                    
+                    <div class="visualizer-content">
+                        <!-- Wave visualizer bars -->
+                        <div class="audio-wave" id="audio-wave">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <div class="stream-info">
+                            <span class="stream-playing-label">CURRENT SPEAKER</span>
+                            <span id="speaker-name-display" class="speaker-name">None Selected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Controls & Live Commentary Ticker -->
+            <div class="panel-right">
+                <!-- Controls Card -->
+                <div class="card controls-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-sliders"></i> Commentary Controls</h3>
+                        <span id="api-badge" class="api-badge api-simulator">SIMULATOR MODE</span>
+                    </div>
+                    
+                    <!-- Match ID Input -->
+                    <div class="control-group">
+                        <label class="control-label" for="match-id-input">Cricbuzz Match ID</label>
+                        <div class="match-input-wrapper">
+                            <i class="fa-solid fa-hashtag input-icon"></i>
+                            <input type="text" id="match-id-input" placeholder="Enter Live Cricbuzz Match ID (e.g. 104764)" title="Find this ID in the match URL on Cricbuzz website">
+                        </div>
+                    </div>
+                    
+                    <!-- Persona Selection -->
+                    <div class="control-group">
+                        <label class="control-label">Select Commentator Persona</label>
+                        <div class="persona-selector">
+                            <button class="persona-btn active" data-persona="Ravi Shastri">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                                <div class="persona-info">
+                                    <span class="name">Ravi Shastri</span>
+                                    <span class="style">High Energy English</span>
+                                </div>
+                            </button>
+                            <button class="persona-btn" data-persona="Virender Sehwag">
+                                <i class="fa-solid fa-face-laugh-beam"></i>
+                                <div class="persona-info">
+                                    <span class="name">Virender Sehwag</span>
+                                    <span class="style">Witty Hinglish</span>
+                                </div>
+                            </button>
+                            <button class="persona-btn" data-persona="Harbhajan Singh">
+                                <i class="fa-solid fa-bolt"></i>
+                                <div class="persona-info">
+                                    <span class="name">Harbhajan Singh</span>
+                                    <span class="style">Punjabi Power Mix</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Listen Radio Switch & Simulate Button -->
+                    <div class="action-row">
+                        <div class="toggle-container">
+                            <span class="toggle-label">Listen Live Radio</span>
+                            <label class="switch">
+                                <input type="checkbox" id="radio-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <button id="simulate-btn" class="btn btn-primary">
+                            <i class="fa-solid fa-play"></i> Simulate Next Ball
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Commentary Ticker Card -->
+                <div class="card ticker-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-list-ul"></i> Live commentary feed</h3>
+                        <span id="connection-indicator" class="indicator-disconnected">Disconnected</span>
+                    </div>
+                    
+                    <!-- Feed Container -->
+                    <div class="feed-container" id="feed-container">
+                        <!-- Initial message -->
+                        <div class="feed-placeholder">
+                            <i class="fa-solid fa-comments"></i>
+                            <p>Simulate a ball or activate Live Radio to start receiving real-time commentary updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- JS files -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

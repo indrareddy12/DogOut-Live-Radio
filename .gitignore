@@ -1,0 +1,16 @@
+# Environments & Secrets
+.env
+
+# Python caches
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Local settings
+.vscode/
+.idea/
+.agents/
+.gemini/
+
+# System logs
+*.log
