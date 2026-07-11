@@ -121,7 +121,7 @@ FALLBACK_PHRASES = {
 
 class ChatbotService:
     def __init__(self):
-        self.model_name = "gemini-1.5-flash"
+        self.model_name = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash")
 
     def translate_to_persona(self, persona: str, raw_event: str, event_type: str) -> str:
         """
@@ -159,11 +159,11 @@ class ChatbotService:
                 system_instruction=instruction
             )
             response = model.generate_content(
-                f"Raw Event: {raw_event}",
-                generation_config={"max_output_tokens": 80, "temperature": 0.8}
+                f"Raw Event: {raw_event}"
             )
             return response.text.strip()
         except Exception as e:
+            print(f"Gemini API Error: {e}", flush=True)
             # Fallback to templates on API failure
             return self._get_fallback_translation(persona, event_type, raw_event)
 
